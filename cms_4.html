@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+		<title></title> 
+      	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      		  crossorigin="anonymous"/>
+      	<link rel="stylesheet" type="text/css" href="index.css" />
+      	
+      	<script 
+      		src="https://code.jquery.com/jquery-3.3.1.min.js"
+  			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  			crossorigin="anonymous"></script>
+  		<script 
+	       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+			crossorigin="anonymous"></script>
+		<script 
+		    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+			crossorigin="anonymous"></script> 		
+	
+	
+		<script>
+         
+         
+         	$( document ).ready(function() {
+           		$.getJSON( "data.json",function(jsonFile){
+            		$("#container").text( "I am currently taking " + jsonFile.length + " classes at UCC." );
+            	});
+         	});
+         	
+         	function write_msg(text,level) {
+				 
+				 $("#message").html('<div class="alert alert-'+ level +' alert-dismissible">' + text + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>');
+				 
+				}
+         	
+         	function loadJson(i) {
+         	
+         		write_msg("Loading, Please wait...","primary");
+         		
+         		$.getJSON( "data.json",function(jsonFile){
+                
+                	
+                	$("title").text(jsonFile[i].code + " " + jsonFile[i].title);
+                	
+                	$("#"+ jsonFile[i].code).html("<p>" + "<h3>" + "<a href=" + jsonFile[i].link + ">" + jsonFile[i].title + "</a>" + "</h3>" + "<p>" + jsonFile[i].Content + "<p>" + jsonFile[i].Credit + " Credits are awarded for this module </P>" + jsonFile[i].Assessment.CA + "% continuous assessment, " + jsonFile[i].Assessment.exam + "% Exams" + "</P>");	
+         		  });	
+      				 		
+      			write_msg("Connected", "success");
+
+         	}	
+            
+			</script>
+		</head>
+		<body>
+			<div class="jumbotron">
+  				<h1 class="display-4">Computer Science - Interactive Media</h1>
+  				<p class="lead">UCC Postgraduate Course</p>
+  				<p class="lead">Tianxia Dong 117220530</p>
+  				<hr class="my-4">
+  				<div id= "container"></div>
+			</div>
+		
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+  				<li class="nav-item">
+    				<a class="nav-link" id="CS6105-tab" data-toggle="tab" onclick="loadJson(0)" href="#CS6105" role="tab" aria-controls="CS6105" aria-selected="false">CS6105</a>
+  				</li>
+  				<li class="nav-item">
+    				<a class="nav-link" id="CS6113-tab" data-toggle="tab" onclick="loadJson(1)" href="#CS6113" role="tab" aria-controls="CS6113" aria-selected="false">CS6113</a>
+  				</li>
+  				<li class="nav-item">
+    				<a class="nav-link" id="CS6114-tab" data-toggle="tab" onclick="loadJson(2)" href="#CS6114" role="tab" aria-controls="CS6114" aria-selected="false">CS6114</a>
+  				</li>
+  				<li class="nav-item">
+    				<a class="nav-link" id="CS6115-tab" data-toggle="tab"  onclick="loadJson(3)" href="#CS6115" role="tab" aria-controls="CS6115" aria-selected="false">CS6115</a>
+  				</li>
+  				<li class="nav-item">
+    				<a class="nav-link" id="CS6116-tab" data-toggle="tab" onclick="loadJson(4)" href="#CS6116" role="tab" aria-controls="CS6116" aria-selected="false">CS6116</a>
+  				</li>
+  				<li class="nav-item">
+    				<a class="nav-link" id="CS6117-tab" data-toggle="tab" onclick="loadJson(5)" href="#CS6117" role="tab" aria-controls="CS6117" aria-selected="false">CS6117</a>
+  				</li>
+			</ul>
+			
+			
+			
+		
+		<div class="tab-content" id="myTabContent">
+  			<div class="tab-pane fade" id="CS6105" role="tabpanel" aria-labelledby="CS6105-tab"></div>
+  			<div class="tab-pane fade" id="CS6113" role="tabpanel" aria-labelledby="CS6113-tab"></div>
+  			<div class="tab-pane fade" id="CS6114" role="tabpanel" aria-labelledby="CS6114-tab"></div>
+  			<div class="tab-pane fade" id="CS6115" role="tabpanel" aria-labelledby="CS6115-tab"></div>
+  			<div class="tab-pane fade" id="CS6116" role="tabpanel" aria-labelledby="CS6116-tab"></div>
+  			<div class="tab-pane fade" id="CS6117" role="tabpanel" aria-labelledby="CS6117-tab"></div>
+		</div>
+		<br>
+		<div id = "message"> </div>
+
+		</body>
+	</html>

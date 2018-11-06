@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+		<title></title> 
+      	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      		  crossorigin="anonymous"/>
+      	<link rel="stylesheet" type="text/css" href="index.css" />
+      	
+      	<script 
+      		src="https://code.jquery.com/jquery-3.3.1.min.js"
+  			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  			crossorigin="anonymous"></script>
+  		<script 
+	       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+			crossorigin="anonymous"></script>
+		<script 
+		    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+			crossorigin="anonymous"></script> 		
+	
+	
+		<script>
+          	var codeArray = new Array;
+          	
+         	$( document ).ready(function() {
+           		$.getJSON( "data.json",function(jsonFile){
+           		
+            		$("#jumboBox").text( "I am currently taking " + jsonFile.length + " classes at UCC." );
+            		
+            		for(var i =0; i< jsonFile.length; i++){
+            		
+						$("#classCodeTab").append("<li class='nav-item'><a class='nav-link' id='"
+						+ jsonFile[i].code +"-tab' data-toggle='tab' href='#"+ jsonFile[i].code 
+						+"' role='tab' aria-controls='"+ jsonFile[i].code +"' aria-selected='false'>" 
+						+ jsonFile[i].code +"</a></li>");
+						
+						$("#classDetail").append("<div class='tab-pane fade' id='"
+						+ jsonFile[i].code +"' role='tabpanel' aria-labelledby='"+ jsonFile[i].code +"-tab'></div>");
+						
+						
+                		$("#"+ jsonFile[i].code).html("<p>" + "<h2>" + "<a href=" + jsonFile[i].link + ">" 
+                		+ jsonFile[i].title + "</a>" + "</h2>" + "<p>" + "<h6>"+"Content:"+"</h6>" 
+                		+ jsonFile[i].Content + "<p>" + "<h6>"+"Credit:"+"</h6>"+ jsonFile[i].Credit 
+                		+ " Credits are awarded for this module </P>" + "<p>" + "<h6>"+"Assessment:"+"</h6>"
+                		+jsonFile[i].Assessment.CA + "% continuous assessment, " + jsonFile[i].Assessment.exam 
+                		+ "% Exams" +"</p>"+ "</P>");
+                		
+						
+						codeArray[i] = jsonFile[i].code;
+						      
+            		}	
+            		$("li").click(function(){
+            			var code = $(this).text();
+            			$("title").html(code + " " +jsonFile[codeArray.indexOf(code)].title);
+            		});
+            	});
+         	});
+         	
+         	function write_msg(text,level) {
+				 
+				 $("#message").html('<div class="alert alert-'+ level +' alert-dismissible">' + text 
+				 + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> </div>');
+				 
+				}
+				
+			//status
+			$(document).ajaxStart(function(){
+				write_msg("Loading, Please wait...","primary");
+			});
+			
+			$(document).ajaxSuccess(function(){
+				write_msg("Connected", "success")
+			});
+			
+			$(document).ajaxError(function(e, xhr){
+  				 write_msg("<strong>Danger:</strong> file  can't be loaded "+ ": " + xhr.status + " " + xhr.statusText,"danger");
+			});
+         	          
+			</script>
+		</head>
+		
+		<body>
+			<div class="container">
+				<div class="jumbotron">
+			
+  					<h1 class="display-4">Computer Science - Interactive Media</h1>
+  					<p class="lead">UCC Postgraduate Course</p>
+  					<p class="lead">Semester 2</p>
+  					<p class="lead">Jingqi Duan 116101979</p>
+  					<hr class="my-1"></hr>
+  					<div id= "jumboBox"></div>
+  				</div>
+			</div>
+		
+			<div class="container">
+				<ul class="nav nav-tabs" id="classCodeTab" role="tablist">	</ul>
+			
+				<div class="tab-content" id="classDetail"></div>
+			
+				<br>
+			
+				<div id = "message"> </div>
+			</div>
+
+		</body>
+	</html>
